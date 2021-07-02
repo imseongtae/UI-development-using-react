@@ -74,6 +74,7 @@ ul.tabs {
   padding: 15px;
   border-bottom: 1px solid #ccc;
   position: relative;
+  cursor: pointer;
 }
 
 .list li:last-child {

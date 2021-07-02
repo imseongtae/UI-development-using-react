@@ -1,6 +1,7 @@
 import { formatRelativeDate } from "./js/helpers.js";
 import store from "./js/Store.js";
 
+// 선택된 탭 식별할 때 변경 가능성이 있는 이름보다 고유한 키를 정의하는 것이 코드 유지보수면에서 더 나음
 const TabType = {
   KEYWORD: 'KEYWORD',
   HISTORY: 'HISTORY',
@@ -18,6 +19,7 @@ class App extends React.Component {
       searchKeyword: '',
       searchResult: [],
       submitted: false,
+      selectedTab: TabType.KEYWORD,
     };
   }
 
@@ -50,7 +52,7 @@ class App extends React.Component {
       submitted: false,
     });
     console.log('TODO: handleReset');
-  }
+  }  
 
   render() {
     const searchForm = (
@@ -92,13 +94,22 @@ class App extends React.Component {
     )
 
     const tabs = (
-      <ul className="tabs">
-        {/* 1 */}
-        {Object.values(TabType).map(tabType => (
-          // 2
-          <li key={tabType}>{TabLabel[tabType]}</li>
-        ))}
-      </ul>
+      <>
+        <ul className="tabs">
+          {/* 1 */}
+          {Object.values(TabType).map(tabType => (
+            <li 
+              key={tabType}
+              className={this.state.selectedTab === tabType ? 'active' : ''}
+              onClick={() => this.setState({ selectedTab: tabType })}
+            >
+              {TabLabel[tabType]}
+            </li>          
+          ))}        
+        </ul>
+        {this.state.selectedTab === TabType.KEYWORD && <>{'TODO: 추천 검색어'}</>}
+        {this.state.selectedTab === TabType.HISTORY && <>{'TODO: 최근 검색어'}</>}
+      </>      
     )
 
     return (
@@ -112,6 +123,7 @@ class App extends React.Component {
 
           {/* 검색 결과 */}
           <div className="content">
+            {/* && 연산자로 조건부 렌더링하던 것을 삼항 연산자 사용으로 변경 */}
             {/* {this.state.submitted && searchResult } */}
             {this.state.submitted ? searchResult : tabs} {/* 1 */}
           </div>
@@ -121,6 +133,7 @@ class App extends React.Component {
   }
 }
 
+// 도경완
 
 ReactDOM.render(<App />, document.querySelector('#app'));
 console.log(<App />);

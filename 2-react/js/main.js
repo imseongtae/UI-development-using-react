@@ -1,6 +1,16 @@
 import { formatRelativeDate } from "./js/helpers.js";
 import store from "./js/Store.js";
 
+const TabType = {
+  KEYWORD: 'KEYWORD',
+  HISTORY: 'HISTORY',
+}
+
+const TabLabel = {
+  [TabType.KEYWORD]: '추천 검색어',
+  [TabType.HISTORY]: '최근 검색어',
+}
+
 class App extends React.Component {
   constructor() {
     super();
@@ -81,6 +91,16 @@ class App extends React.Component {
         : <div>검색 결과가 없습니다</div>
     )
 
+    const tabs = (
+      <ul className="tabs">
+        {/* 1 */}
+        {Object.values(TabType).map(tabType => (
+          // 2
+          <li key={tabType}>{TabLabel[tabType]}</li>
+        ))}
+      </ul>
+    )
+
     return (
       <>
         <header>
@@ -92,7 +112,8 @@ class App extends React.Component {
 
           {/* 검색 결과 */}
           <div className="content">
-            {this.state.submitted && searchResult }
+            {/* {this.state.submitted && searchResult } */}
+            {this.state.submitted ? searchResult : tabs} {/* 1 */}
           </div>
         </div>
       </>

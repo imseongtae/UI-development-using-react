@@ -21,15 +21,20 @@ class App extends React.Component {
       submitted: false,
       selectedTab: TabType.KEYWORD,
       keywordList: [],
+      historyList: [],
     };
   }
 
   componentDidMount() {
     // const keywordList = store.getKeywordList();
     const keywordList = store.getKeywordList();
+    const historyList = store.getHistoryList();
     console.log('componentDidMount()');
-    this.setState({ keywordList })
-  }
+    this.setState({ 
+      keywordList,
+      historyList,
+    })
+  };
 
   handleChangeInput(event) {
     const searchKeyword = event.target.value;
@@ -61,7 +66,14 @@ class App extends React.Component {
       submitted: false,
     });
     console.log('TODO: handleReset');
-  }  
+  }
+
+  handleClickRemoveHistory(event, keyword) {
+    event.stopPropagation();
+    store.removeHistory(keyword);
+    const historyList = store.getHistoryList();
+    this.setState({ historyList })
+  }
 
   render() {
     const searchForm = (
@@ -113,6 +125,18 @@ class App extends React.Component {
       </ul>
     );
 
+    const historyList = (
+      <ul className="list">
+        {this.state.historyList.map(({ id, keyword, date }) => (
+          <li key={id} onClick={() => this.search(keyword)}>
+            <span>{keyword}</span>
+            <span className="date">{formatRelativeDate(date)}</span>
+            <button className="btn-remove" onClick={event => this.handleClickRemoveHistory(event, keyword)} />
+          </li>
+        ))}
+      </ul>
+    );
+
     const tabs = (
       <>
         <ul className="tabs">
@@ -129,7 +153,7 @@ class App extends React.Component {
         </ul>
         {/* {this.state.selectedTab === TabType.KEYWORD && <>{'TODO: 추천 검색어'}</>} */}
         {this.state.selectedTab === TabType.KEYWORD && keywordList}
-        {this.state.selectedTab === TabType.HISTORY && <>{'TODO: 최근 검색어'}</>}
+        {this.state.selectedTab === TabType.HISTORY && historyList}
       </>      
     )        
     

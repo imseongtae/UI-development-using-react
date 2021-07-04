@@ -181,7 +181,5 @@ class App extends React.Component {
   }
 }
 
-// 도경완
-
 ReactDOM.render(<App />, document.querySelector('#app'));
 console.log(<App />);

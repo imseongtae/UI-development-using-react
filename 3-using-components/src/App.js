@@ -3,6 +3,7 @@ import Header from './components/Header'
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult.jsx';
 import Tabs, { TabType } from './components/Tabs.jsx'; // TabType 을 꺼냄
+import KeywordList from './components/KeywordList';
 
 import store from './js/Store';
 
@@ -55,7 +56,7 @@ class App extends React.Component {
         />
         {/* 각 탭을 클릭하면 change 이벤트가 발생하는데 선택한 탭을 selectedTab 상태로 반영 */}
         <Tabs selectedTab={selectedTab} onChange={selectedTab => this.setState({ selectedTab })} />
-        {selectedTab === TabType.KEYWORD && <>{'TODO: 추천 검색어'}</>}
+        {selectedTab === TabType.KEYWORD && <KeywordList onClick={searchKeyword => this.search(searchKeyword)} />}
         {selectedTab === TabType.HISTORY && <>{'TODO: 최근 검색어'}</>}
         {submitted && <SearchResult data={searchResult} />}
       </>

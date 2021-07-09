@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header'
 import SearchForm from './components/SearchForm';
 import SearchResult from './components/SearchResult.jsx';
+import Tabs, { TabType } from './components/Tabs.jsx'; // TabType 을 꺼냄
 
 import store from './js/Store';
 
@@ -11,9 +12,10 @@ class App extends React.Component {
     this.state = {
       searchKeyword: '',
       searchResult: [],
-      submitted: false,      
+      submitted: false,
+      selectedTab: TabType.KEYWORD,
     }
-  }
+  };
 
   handleChangeInput(value) {
     // 검색어를 모두 지우면 reset 이벤트 발생
@@ -50,7 +52,11 @@ class App extends React.Component {
           onChange={value => this.handleChangeInput(value)}
           onSubmit={() => this.search(searchKeyword)}
           onReset={() => this.handleReset()}
-        />        
+        />
+        {/* 각 탭을 클릭하면 change 이벤트가 발생하는데 선택한 탭을 selectedTab 상태로 반영 */}
+        <Tabs selectedTab={selectedTab} onChange={selectedTab => this.setState({ selectedTab })} />
+        {selectedTab === TabType.KEYWORD && <>{'TODO: 추천 검색어'}</>}
+        {selectedTab === TabType.HISTORY && <>{'TODO: 최근 검색어'}</>}
         {submitted && <SearchResult data={searchResult} />}
       </>
     )

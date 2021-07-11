@@ -36,6 +36,7 @@ const SearchForm: FunctionComponent<Props> = ({ value, onSubmit, onReset, onChan
         value={value}
         onChange={handleInputChange}
       />
+      {value.length > 0 && <button type="reset" className="btn-reset" />}
     </form>
   )
 }

@@ -9,38 +9,42 @@ const data = store.getHistoryList();
 console.log(data);
 
 function App() {
-  const [keyword, setKeword] = useState<string>('');
+  const [searchKeyword, setSearchKeword] = useState<string>('');
   const [searchResult, setSearchResult] = useState<SearchResultItem[] | []>([]);
-
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  
 
   const search = (keyword: string) => {
     console.log(keyword);
     const searchResult: SearchResultItem[] | [] = store.search(keyword);
+    setIsSubmitted(true);
     setSearchResult(searchResult);
   };
 
   const handleReset = () => {
-    console.log('reset');    
-  };  
+    console.log('reset');
+    setSearchKeword('');
+    setIsSubmitted(false);
+  };
 
   // const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {    
   //   setKeword(event.target.value);
   // }
   const handleChangeInput = (keyword: string) => {    
-    setKeword(keyword);
+    setSearchKeword(keyword);
   };
 
   return (
     <>
       <Header title="검색" />
       <SearchForm 
-        value={keyword}
-        onSubmit={() => search(keyword)}
+        value={searchKeyword}
+        onSubmit={() => search(searchKeyword)}
         onReset={handleReset}
-        onChange={(keyword: string) => handleChangeInput(keyword)}
+        onChange={(searchKeyword: string) => handleChangeInput(searchKeyword)}
       />
-      {/* TODO */}
-      <SearchResult data={searchResult} />
+      {/* TODO */}      
+      {isSubmitted && <SearchResult data={searchResult} />}
     </>
   );
 }

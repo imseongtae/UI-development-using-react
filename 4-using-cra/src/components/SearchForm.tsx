@@ -22,7 +22,7 @@ const SearchForm: FunctionComponent<Props> = ({ value, onSubmit, onReset, onChan
   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {        
   //   onChange(event);
   // }
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: string = event.target.value;
     onChange(newValue);
   }
@@ -33,8 +33,7 @@ const SearchForm: FunctionComponent<Props> = ({ value, onSubmit, onReset, onChan
         type="text"      
         placeholder="검색어를 입력하세요"
         autoFocus
-        value={value}        
-        // onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange(event)}        
+        value={value}
         onChange={handleInputChange}
       />
     </form>

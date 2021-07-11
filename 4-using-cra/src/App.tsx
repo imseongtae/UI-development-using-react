@@ -3,15 +3,18 @@ import './style.css';
 import Header from 'components/Header';
 import SearchForm from 'components/SearchForm';
 import SearchResult, { SearchResultItem } from 'components/SearchResult';
+import Tabs, { TabType } from 'components/Tabs';
+
 import store from 'data/Store';
 
 const data = store.getHistoryList();
 console.log(data);
 
-function App() {
+const App:React.FunctionComponent = () => {
   const [searchKeyword, setSearchKeword] = useState<string>('');
   const [searchResult, setSearchResult] = useState<SearchResultItem[] | []>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = useState<string>(TabType.KEYWORD);
   
 
   const search = (keyword: string) => {
@@ -32,7 +35,7 @@ function App() {
   // }
   const handleChangeInput = (keyword: string) => {    
     setSearchKeword(keyword);
-  };
+  };  
 
   return (
     <>
@@ -43,7 +46,9 @@ function App() {
         onReset={handleReset}
         onChange={(searchKeyword: string) => handleChangeInput(searchKeyword)}
       />
-      {/* TODO */}      
+      {/* TODO */}
+      <Tabs selectedTab={selectedTab} onChange={selectedTab => setSelectedTab(selectedTab)} />
+
       {isSubmitted && <SearchResult data={searchResult} />}
     </>
   );

@@ -4,7 +4,8 @@ import Header from 'components/Header';
 import SearchForm from 'components/SearchForm';
 import SearchResult, { SearchResultItem } from 'components/SearchResult';
 import Tabs, { TabType } from 'components/Tabs';
-
+import KeywordList from 'components/KeywordList';
+import HistoryList from 'components/HistoryList';
 import store from 'data/Store';
 
 const data = store.getHistoryList();
@@ -48,6 +49,8 @@ const App:React.FunctionComponent = () => {
       />
       {/* TODO */}
       <Tabs selectedTab={selectedTab} onChange={selectedTab => setSelectedTab(selectedTab)} />
+      {selectedTab === TabType.KEYWORD && <KeywordList onClick={searchKeyword => search(searchKeyword)} />}
+      {selectedTab === TabType.HISTORY && <HistoryList onClick={searchKeyword => search(searchKeyword)} />}
 
       {isSubmitted && <SearchResult data={searchResult} />}
     </>

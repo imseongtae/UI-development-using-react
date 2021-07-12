@@ -4,7 +4,8 @@ import Header from './components/Header';
 import SearchForm from './components/SearchForm';
 import Tabs, { TabType } from './components/Tabs';
 import SearchResult, { SearchResultItem } from './components/SearchResult';
-
+import KeywordList from './components/KeywordList';
+import HistoryList from './components/HistoryList';
 import store from './data/Store';
 
 const App: React.FunctionComponent = () => {
@@ -25,7 +26,7 @@ const App: React.FunctionComponent = () => {
   const handleReset = (): void => {
     console.log('reset');
     setSearchKeyword('');
-    // setIsSubmitted(false);
+    setIsSubmitted(false);
   };
 
   const handleChangeInput = (searchKeyword: string): void => {
@@ -45,6 +46,14 @@ const App: React.FunctionComponent = () => {
         selectedTab={selectedTab}
         onChange={selectedTab => setSelectedTab(selectedTab)}
       />
+      {/* 추천 및 최근 검색어 목록 */}
+      {selectedTab === TabType.KEYWORD && (
+        <KeywordList onClick={searchKeyword => search(searchKeyword)} />
+      )}
+      {selectedTab === TabType.HISTORY && (
+        <HistoryList onClick={searchKeyword => search(searchKeyword)} />
+      )}
+      {/* 검색 결과 목록 */}
       {isSubmitted && <SearchResult data={searchResult} />}
     </>
   );

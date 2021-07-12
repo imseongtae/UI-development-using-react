@@ -3,16 +3,23 @@ import './styles/main.css';
 import Header from './components/Header';
 import SearchForm from './components/SearchForm';
 import Tabs, { TabType } from './components/Tabs';
+import SearchResult, { SearchResultItem } from './components/SearchResult';
+
+import store from './data/Store';
 
 const App: React.FunctionComponent = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const [selectedTab, setSelectedTab] = useState<string>(TabType.KEYWORD);
-  // const [searchResult, setSearchResult] = useState<SearchResultItem[] | []>([]);
-  // const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [searchResult, setSearchResult] = useState<SearchResultItem[] | []>([]);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const search = (searchKeyword: string): void => {
     console.log(searchKeyword);
     setSearchKeyword(searchKeyword);
+    const searchResult: Array<SearchResultItem> | [] =
+      store.search(searchKeyword);
+    setIsSubmitted(true);
+    setSearchResult(searchResult);
   };
 
   const handleReset = (): void => {
@@ -38,7 +45,7 @@ const App: React.FunctionComponent = () => {
         selectedTab={selectedTab}
         onChange={selectedTab => setSelectedTab(selectedTab)}
       />
-      <div>App with TypeScript</div>
+      {isSubmitted && <SearchResult data={searchResult} />}
     </>
   );
 };

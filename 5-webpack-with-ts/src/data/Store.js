@@ -1,4 +1,4 @@
-import { createNextId } from './helpers';
+import { createNextId } from './helpers.js';
 import storage from './storage';
 
 const tag = '[Store]';

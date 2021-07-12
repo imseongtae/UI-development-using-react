@@ -33,3 +33,20 @@ $ yarn add -D  ts-loader webpack webpack-cli webpack-dev-server
 ```bash
 $ yarn add -D eslint eslint-config-prettier eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
+
+## Loader
+
+### Style Loader
+
+
+```bash
+$ yarn add -D style-loader css-loader
+```
+
+## Plugin
+
+```bash
+$ yarn add -D html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin
+```
+
+

@@ -50,3 +50,7 @@ $ yarn add -D html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin
 ```
 
 
+## Absolute path
+- [webpack + typescript에서 절대경로 사용하기](https://blog.naver.com/izure/222177415719)
+- [타입스크립트에서 절대경로(alias) 사용하기!](https://chanyeong.com/blog/post/35)
+

@@ -5,8 +5,9 @@ import Image from 'next/image'
 import Header from '@/components/Header'
 import SearchForm from '~/components/SearchForm'
 import SearchResultList, { SearchResultItem } from '@/components/SearchResultList'
-import Tabs, { TabType } from '~/components/Tabs'
-
+import Tabs, { TabType } from '@/components/Tabs';
+import KeywordList from '@/components/KeywordList';
+import HistoryList from '@/components/HistoryList';
 
 import store from '~/data/Store';
 
@@ -17,12 +18,12 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<string>(TabType.KEYWORD);
 
-  const search = () => {
+  const search = (searchKeyword: string) => {
     console.log(searchKeyword);
     setSearchKeyword(searchKeyword);
     const searchResult = store.search(searchKeyword);
-    setIsSubmitted(true);
     setSearchResult(searchResult);
+    setIsSubmitted(true);
   };
 
   const handleReset = () => {
@@ -40,13 +41,16 @@ export default function Home() {
       <Header title="검색" />
       <SearchForm
         value={searchKeyword} 
-        onSubmit={() => search()} 
+        onSubmit={() => search(searchKeyword)} 
         onReset={handleReset} 
         onChange={(searchKeyword) => handleInputChange(searchKeyword)}
       />
       <Tabs selectedTab={selectedTab} onChange={(selectedTab) => setSelectedTab(selectedTab)} />
+      {/* 추천 및 최근 검색어 목록 */}
+      {selectedTab === TabType.KEYWORD && <KeywordList onClick={searchKeyword => search(searchKeyword)} />}
+      {selectedTab === TabType.HISTORY && <HistoryList onClick={searchKeyword => search(searchKeyword)} />}
+      {/* 검색 결과 목록 */}
       {isSubmitted && <SearchResultList data={searchResult} />}
-      
     </>
   );
 };
